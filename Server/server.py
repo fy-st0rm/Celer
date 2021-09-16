@@ -3,7 +3,6 @@ import socket
 import json
 import os
 import time
-from pyngrok import ngrok
 
 from cmd_line import *
 
@@ -62,14 +61,14 @@ class Server:
 				password = tokens[2].split(":")[1]
 				
 				# Checking for username and password
-				time.sleep(0.5)
+				time.sleep(0.1)
 				if username in self.clients:
 					if password == self.clients[username]["password"]:
-						time.sleep(0.5)
+						time.sleep(0.1)
 						conn.send(self.ACCEPTED.encode(self.FORMAT))
 						return [True, username]
 				
-				time.sleep(0.5)
+				time.sleep(0.1)
 				conn.send(self.REJECTED.encode(self.FORMAT))
 
 			# If the info is from signup page
@@ -78,7 +77,7 @@ class Server:
 				password = tokens[2].split(":")[1]
 
 				# Checking if username already doesnt exists
-				time.sleep(0.5)
+				time.sleep(0.1)
 				if username not in self.clients:
 					# Saving the clients info
 					self.clients.update({username: 
@@ -90,11 +89,11 @@ class Server:
 											}
 										})
 					self.__save_data()
-					time.sleep(0.5)
+					time.sleep(0.1)
 					conn.send(self.ACCEPTED.encode(self.FORMAT))
 					return [True, username]
 				else:
-					time.sleep(0.5)
+					time.sleep(0.1)
 					conn.send(self.REJECTED.encode(self.FORMAT))
 
 			# If the app closed
@@ -105,10 +104,10 @@ class Server:
 	def __create_new_sv(self, conn, key, name):
 		servers = os.listdir(os.path.join("Servers"))
 		if key in servers:
-			time.sleep(0.5)
+			time.sleep(0.1)
 			conn.send(self.REJECTED.encode(self.FORMAT))
 		else:
-			time.sleep(0.5)
+			time.sleep(0.1)
 			conn.send(self.ACCEPTED.encode(self.FORMAT))
 
 			os.mkdir(os.path.join(f"Servers/{key}"))
@@ -146,7 +145,7 @@ class Server:
 
 					data_to_send += f" {key}:{name}"
 
-		time.sleep(0.5)
+		time.sleep(0.1)
 		conn.send(data_to_send.encode(self.FORMAT))
 
 	# Message stuff
@@ -158,7 +157,7 @@ class Server:
 				chat_history = r.read()
 
 			data = self.MSG + " " + chat_history
-			time.sleep(0.5)
+			time.sleep(0.1)
 			conn.send(data.encode(self.FORMAT))
 
 	def __send_msg(self, key, msg):
@@ -239,7 +238,7 @@ class Server:
 
 			if tokens[0] == self.DISCONNECT:
 				client_online[0] = False
-				time.sleep(0.5)
+				time.sleep(0.1)
 				conn.send(self.DISCONNECT.encode(self.FORMAT))		
 
 				self.active_clients.pop(client_online[1])
@@ -258,7 +257,7 @@ class Server:
 
 				self.__join_to_server(key, name)
 
-				time.sleep(0.5)
+				time.sleep(0.1)
 				self.__send_server_data(conn, name)
 			
 			# When member leaves a server
