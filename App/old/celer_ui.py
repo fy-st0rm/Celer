@@ -24,6 +24,13 @@ class log_ui:
 		#background
 		self.bg = tk.Label(image = self.bg_img)
 
+		#Checks for the type of the os for fullscreen
+		if platform.system() == "Linux":
+			self.width = 15
+		elif platform.system() == "Windows":
+			self.width = 20	
+
+
 		#Tabs Setup
 		self.notebook = ttk.Notebook(self.window,style="TNotebook")
 		self.tab1 = tk.Frame(self.notebook, width = 350, height = 500, bg = 'white')
@@ -35,17 +42,17 @@ class log_ui:
 		#Wigets in tab1
 		self.title_signin = tk.Label(self.tab1,text = 'celer\nSign in Window', font = self.font, fg = '#6e6e6e', bg ='white')
 		self.title_username_signin = tk.Label(self.tab1,text = 'Username:', font = self.font, fg = '#6e6e6e', bg ='white')
-		self.username_signin = tk.Entry(self.tab1, bg = '#d6d6d6', width = 15, borderwidth = 0, font = self.font)
+		self.username_signin = tk.Entry(self.tab1, bg = '#d6d6d6', width = self.width, borderwidth = 0, font = self.font)
 		self.title_password_signin = tk.Label(self.tab1,text = 'Password:', font = self.font, fg = '#6e6e6e', bg ='white')
-		self.password_signin = tk.Entry(self.tab1, bg = '#d6d6d6', width = 15, borderwidth = 0, font = self.font, show = '*')
+		self.password_signin = tk.Entry(self.tab1, bg = '#d6d6d6', width = self.width, borderwidth = 0, font = self.font, show = '*')
 		self.button_singnin = tk.Button(self.tab1, text = 'Signin!', command = self.getdataSignin, image = self.button_nopressed, bg = 'white', borderwidth = 0, relief='sunken', highlightthickness=0, bd=0)
 
 		#Wigets in tab2
 		self.title_signup = tk.Label(self.tab2,text = 'celer\nSign up Window', font = self.font, fg = '#6e6e6e', bg ='white')
 		self.title_username_signup = tk.Label(self.tab2,text = 'Username:', font = self.font, fg = '#6e6e6e', bg ='white')
-		self.username_signup = tk.Entry(self.tab2, bg = '#d6d6d6', width = 20, borderwidth = 0, font = self.font)
+		self.username_signup = tk.Entry(self.tab2, bg = '#d6d6d6', width = self.width, borderwidth = 0, font = self.font)
 		self.title_password_signup = tk.Label(self.tab2,text = 'Password:', font = self.font, fg = '#6e6e6e', bg ='white')
-		self.password_signup = tk.Entry(self.tab2, bg = '#d6d6d6', width = 20, borderwidth = 0, font = self.font, show = '*')
+		self.password_signup = tk.Entry(self.tab2, bg = '#d6d6d6', width = self.width, borderwidth = 0, font = self.font, show = '*')
 		self.button_singnup = tk.Button(self.tab2, text = 'Signup!', command = self.getdataSignup, image = self.button_nopressed_up, bg = 'white', borderwidth = 0, relief='sunken', highlightthickness=0, bd=0)	
 		
 	def drawUI(self):
