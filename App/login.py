@@ -6,14 +6,18 @@ from tkinter import ttk
 from tkinter import messagebox
 
 
+#-- Celer
+from celer import *
+
+
 class Login:
 	def __init__(self, network):
 		self.network = network
 
 		#-- Setting up window
-		self.tk = tk.Tk()
-		self.tk.geometry("900x600")
-		self.tk.resizable(False, False)
+		self.root = tk.Tk()
+		self.root.geometry("900x600")
+		self.root.resizable(False, False)
 		
 		self.font = tk.font.Font( family = 'Bahnschrift Light', size = 20)
 
@@ -40,7 +44,7 @@ class Login:
 		self.background.place(x = -1, y = 0)
 
 	def __init_notebook(self):
-		self.notebook = ttk.Notebook(self.tk, style = "TNotebook")
+		self.notebook = ttk.Notebook(self.root, style = "TNotebook")
 	
 	def __tab_1(self):
 		self.tab_1 = tk.Frame(self.notebook, width = 350, height = 500, bg = "white")
@@ -93,7 +97,10 @@ class Login:
 		reply = self.network.recv()
 		
 		if reply == "[ACCEPTED]":
-			self.tk.destroy()
+			self.root.destroy()
+
+			celer = Celer(username, self.network)
+			celer.run()
 
 		elif reply == "[REJECTED]":
 			tk.messagebox.showerror("error", "username or password is wrong!")
@@ -110,8 +117,11 @@ class Login:
 			reply = self.network.recv()
 
 			if reply == "[ACCEPTED]":
-				self.tk.destroy()
+				self.root.destroy()
 
+				celer = Celer(username, self.network)
+				celer.run()
+	
 			elif reply == "[REJECTED]":
 				tk.messagebox.showerror("error", "username already exsists!")	
 
@@ -153,6 +163,6 @@ class Login:
 	def run(self):
 		self.__render()
 
-		self.tk.mainloop()
+		self.root.mainloop()
 
 
