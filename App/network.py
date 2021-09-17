@@ -10,9 +10,13 @@ class Network:
 		self.FORMAT = FORMAT
 
 	def connect(self):
-		self.network = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.network.connect(self.ADDR)
-	
+		try:
+			self.network = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			self.network.connect(self.ADDR)
+		except Exception as e:
+			print(e)
+			#[TODO] Show error msgbox
+
 	def send(self, data):
 		self.network.send(data.encode(self.FORMAT))
 
