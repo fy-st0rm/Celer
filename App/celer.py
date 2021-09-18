@@ -12,11 +12,21 @@ import threading
 from encrypt import *
 
 
+#--------#
+# Colors #
+#--------#
+
+BACKGROUND = "#44475a"
+FOREGROUND = "#f8f8f2"
+SV_LIST    = "#282a36"
+TEXT_ENTRY = "#6272a4"
+
+
 # A scrollable Frame
 class ScrollableFrame(tk.Frame):
 	def __init__(self, container, *args, **kwargs):
 		super().__init__(container, *args, **kwargs)
-		self.canvas = tk.Canvas(self)
+		self.canvas = tk.Canvas(self, bg = SV_LIST)
 		scrollbar = tk.Scrollbar(self, orient = "vertical", command = self.canvas.yview)
 		self.scrollable_frame = tk.Canvas(self.canvas)
 
@@ -79,7 +89,7 @@ class Celer:
 		elif platform.system() == "Windows":
 			self.root.state("zoomed")	
 		
-		self.canvas = tk.Canvas(self.root, bg = "gray")
+		self.canvas = tk.Canvas(self.root, bg = BACKGROUND)
 		self.canvas.pack(fill = "both", expand = True)
 
 	#----------------#
@@ -106,6 +116,7 @@ class Celer:
 	def __get_join_data(self, e):
 		sv_code = self.sv_key_entry.get()
 		self.__join_sv(sv_code)
+		self.join_sv_window.destroy()
 
 	def __join_sv_ui(self):		
 		self.join_sv_window = tk.Toplevel(self.canvas)
@@ -165,12 +176,12 @@ class Celer:
 		self.sv_list.place(relx = 0.02, rely = 0.13, relwidth = 0.052, relheight = 0.85)
 
 	def __draw_chat_box(self):
-		self.chat_box = tk.Text(self.canvas)
+		self.chat_box = tk.Text(self.canvas, bg = BACKGROUND, fg = FOREGROUND)
 		#self.chat_box.place(relx = 0.1, rely = 0.13, relwidth = 0.75, relheight = 0.78)
 		self.chat_box.configure(state = "disabled")
 
 	def __draw_text_entry(self):
-		self.text_entry = tk.Entry(self.canvas)
+		self.text_entry = tk.Entry(self.canvas, bg = TEXT_ENTRY, fg = FOREGROUND)
 		#self.text_entry.place(relx = 0.1, rely = 0.93, relwidth = 0.75, relheight = 0.05)
 		self.text_entry.bind("<Return>", self.__send_msg)
 
@@ -218,7 +229,7 @@ class Celer:
 			i.configure(bg = "white")
 
 		label = e.widget
-		label.configure(bg = "#37d3ff")
+		label.configure(bg = TEXT_ENTRY)
 		sv_id = label.cget("text").split(":")[0]
 		self.key = self.server_list[int(sv_id)][0]	
 		
