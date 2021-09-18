@@ -16,10 +16,10 @@ from encrypt import *
 # Colors #
 #--------#
 
-BACKGROUND = "#44475a"
-FOREGROUND = "#f8f8f2"
-SV_LIST    = "#282a36"
-TEXT_ENTRY = "#6272a4"
+BACKGROUND = "#2d2e38"
+FOREGROUND = "#ffffff"
+SV_LIST    = "#5e72a1"
+TEXT_ENTRY = "#45485b"
 
 
 # A scrollable Frame
